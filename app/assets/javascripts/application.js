@@ -75,6 +75,10 @@ $(document).ready(function(){
   	.tablesorter({sortList: [[0,0]]})
     .tablesorterPager({container: $("#pager-form_items_ours-table")})
   ;
+  $("#form_items_our_groups-table")
+  	.tablesorter({sortList: [[0,0]]})
+    .tablesorterPager({container: $("#pager-form_items_our_groups-table")})
+  ;
   $("#questionnaires-table")
   	.tablesorter({sortList: [[0,0]]})
     .tablesorterPager({container: $("#pager-questionnaires-table")})
