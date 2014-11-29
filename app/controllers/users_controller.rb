@@ -106,6 +106,14 @@ class UsersController < ApplicationController
     
     respond_to do|format|
       if @user.save
+        unless @user.authors.nil?
+          @user.authors.each do |a|
+            a.email = @user.email
+            a.first_name = @user.first_name
+            a.last_name = @user.last_name
+            a.save
+          end  
+        end
         flash[:notice] = %Q|#{@user} updated|
         format.html {redirect_to :action => :index}
       else
@@ -137,12 +145,12 @@ class UsersController < ApplicationController
     end
     respond_to do |format|
       unless params[:new_emails].blank?
-        unless params[:publisher_id].nil?
+        unless params[:publisher_id].nil? || params[:publisher_id].blank?
           emails.collect{|e| e.strip}.each do |email|
             current_user.send_new_publisher_user_email(email, "#{new_user_registration_path(:publisher_id => params[:publisher_id], :email => email)}") 
           end  
         end
-        unless params[:library_id].nil?
+        unless params[:library_id].nil? || params[:library_id].blank?
           emails.collect{|e| e.strip}.each do |email|
             current_user.send_new_library_user_email(email, "#{new_user_registration_path(:library_id => params[:library_id], :email => email)}") 
           end  
